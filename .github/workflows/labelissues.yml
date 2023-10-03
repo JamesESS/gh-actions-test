@@ -18,13 +18,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueNumber = context.payload.issue.number;
-            const issueBody = await github.issues.getBody({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issueNumber
-            });
-            
+            const commentBody = github.event.comment.body;            
             const labelsToAdd = [];
 
             // Add logic to determine labels based on issueBody
