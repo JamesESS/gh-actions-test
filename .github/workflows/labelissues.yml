@@ -1,0 +1,44 @@
+name: Label Issues
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  label-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Label Issues
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueBody = github.context.payload.issue.body;
+            const labelsToAdd = [];
+
+            // Add logic to determine labels based on issueBody
+            if (issueBody.includes("(e1)")) {
+              labelsToAdd.push("e1");
+            }
+            if (issueBody.includes("(e2)")) {
+              labelsToAdd.push("e2");
+            }
+            if (issueBody.includes("(e3)")) {
+              labelsToAdd.push("e3");
+            }
+            if (issueBody.includes("(e5)")) {
+              labelsToAdd.push("e5");
+            }
+
+            // Apply labels
+            await github.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: labelsToAdd
+            });
