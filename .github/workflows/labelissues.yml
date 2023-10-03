@@ -18,7 +18,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueBody = github.context.payload.issue.body;
+            const issueNumber = context.payload.issue.number;
+            const issueBody = await github.issues.getBody({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber
+            });
+            
             const labelsToAdd = [];
 
             // Add logic to determine labels based on issueBody
