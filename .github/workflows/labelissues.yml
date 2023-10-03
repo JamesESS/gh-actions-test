@@ -1,9 +1,9 @@
 name: Label Issues
 
 on:
-  issues:
+  issue_comment:
     types:
-      - opened
+      - created
 
 jobs:
   label-issues:
